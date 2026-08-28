@@ -117,6 +117,86 @@
             text-align: center;
             width: 100%;
         }
+
+        /* Before & After Interactive Slider Styles */
+        .ba-slider-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            border-radius: 1rem;
+            border: 1px solid #4B5563;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            user-select: none;
+        }
+        .ba-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .ba-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .ba-before-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .ba-before-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-width: none;
+        }
+        .ba-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: ew-resize;
+            z-index: 10;
+            margin: 0;
+        }
+        .ba-slider-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            background-color: #14B8A6;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 5;
+            transform: translateX(-50%);
+        }
+        .ba-slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background-color: #14B8A6;
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+            z-index: 6;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -197,10 +277,81 @@
             </div>
         </section>
 
+        <!-- Before and After Interactive Slider Section -->
+        <section class="mb-20 bg-gray-800/50 p-8 sm:p-12 rounded-3xl border border-gray-700">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Left Side: Title, Blurb & Checkmark List -->
+                <div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-50 mb-6 leading-tight">
+                        Local Painters You Can Rely On
+                    </h2>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                        With extensive painting and customer service experience, our business is committed to results that both revitalize and reshape your space- One coat at a time.
+                    </p>
+
+                    <!-- Checkmarks List -->
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-teal-400 font-bold text-xl">✓</span>
+                            <span class="text-gray-200 text-sm font-medium">Invest in the Value of Your Home</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-teal-400 font-bold text-xl">✓</span>
+                            <span class="text-gray-200 text-sm font-medium">We Work on Your Schedule</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-teal-400 font-bold text-xl">✓</span>
+                            <span class="text-gray-200 text-sm font-medium">Repaints &amp; Renovations</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-teal-400 font-bold text-xl">✓</span>
+                            <span class="text-gray-200 text-sm font-medium">Inside or Outside - We'll Get it Done</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-teal-400 font-bold text-xl">✓</span>
+                            <span class="text-gray-200 text-sm font-medium">Liven Up Your Space</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-teal-400 font-bold text-xl">✓</span>
+                            <span class="text-gray-200 text-sm font-medium">Trust the Experts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Interactive Photo Slider Box -->
+                <div class="ba-slider-container">
+                    <div class="ba-image-wrapper">
+                        <!-- Replace 'after-photo.jpg' with your actual AFTER image file -->
+                        <img src="after-photo.jpg" alt="After Painting" class="ba-img ba-after-img" />
+                        
+                        <!-- Replace 'before-photo.jpg' with your actual BEFORE image file -->
+                        <div class="ba-before-wrapper">
+                            <img src="before-photo.jpg" alt="Before Painting" class="ba-img ba-before-img" />
+                        </div>
+                    </div>
+                    
+                    <input type="range" min="0" max="100" value="50" class="ba-slider" id="baSlider" />
+                    <div class="ba-slider-line"></div>
+                    
+                    <!-- Paint Brush Slider Handle Button -->
+                    <div class="ba-slider-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2a2 2 0 0 0 2.8 0L19 11Z"/>
+                            <path d="m5 2 5 5"/>
+                            <path d="M2 13h15"/>
+                            <path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/>
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section id="contact" class="bg-gray-800/50 p-12 rounded-3xl border border-gray-700">
             
-            <!-- Animated Trust Badges Added Here -->
+            <!-- Animated Trust Badges -->
             <div class="badge-container" id="badgeSection">
                 <div class="trust-badge">
                     <h4>Fully Licensed and Insured</h4>
@@ -267,9 +418,10 @@
         <p class="mt-1">Call: 403-805-4809 | Email: shadepaintingco@gmail.com</p>
     </footer>
 
-    <!-- Scroll Animation Observer Script -->
+    <!-- Scripts -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Trust Badges Observer
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -284,6 +436,32 @@
             if (badgeSection) {
                 observer.observe(badgeSection);
             }
+
+            // Before & After Interactive Slider Logic
+            const slider = document.getElementById('baSlider');
+            const beforeWrapper = document.querySelector('.ba-before-wrapper');
+            const beforeImg = document.querySelector('.ba-before-img');
+            const sliderLine = document.querySelector('.ba-slider-line');
+            const sliderBtn = document.querySelector('.ba-slider-button');
+            const container = document.querySelector('.ba-slider-container');
+
+            function updateSliderWidth() {
+                if (container && beforeImg) {
+                    beforeImg.style.width = container.offsetWidth + 'px';
+                }
+            }
+
+            if (slider) {
+                slider.addEventListener('input', (e) => {
+                    const val = e.target.value;
+                    beforeWrapper.style.width = `${val}%`;
+                    sliderLine.style.left = `${val}%`;
+                    sliderBtn.style.left = `${val}%`;
+                });
+            }
+
+            window.addEventListener('resize', updateSliderWidth);
+            updateSliderWidth();
         });
     </script>
 </body>
