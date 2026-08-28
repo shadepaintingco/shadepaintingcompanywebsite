@@ -74,11 +74,15 @@
             background-color: #0D9488;
         }
 
-        /* Trust Badges Scroll Animation Styles */
+        /* Trust Badges Scroll Animation Styles - Centered Layout */
         .badge-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
             gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .trust-badge {
             background-color: #374151;
@@ -91,6 +95,10 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            
+            /* Responsive Widths for Balanced Alignment */
+            flex: 1 1 280px;
+            max-width: 360px;
             
             opacity: 0;
             transform: translateY(40px);
