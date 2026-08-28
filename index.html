@@ -74,6 +74,16 @@
             background-color: #0D9488;
         }
 
+        /* Hero Banner Image Box Styling */
+        .hero-banner-container {
+            position: relative;
+            width: 100%;
+            background-image: linear-gradient(rgba(17, 24, 39, 0.75), rgba(17, 24, 39, 0.85)), url('hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         /* Trust Badges Scroll Animation Styles - Centered Layout */
         .badge-container {
             display: flex;
@@ -96,7 +106,6 @@
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             
-            /* Responsive Widths for Balanced Alignment */
             flex: 1 1 280px;
             max-width: 360px;
             
@@ -222,19 +231,23 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <main class="max-w-7xl mx-auto px-6 py-24 lg:py-32">
-        <div class="text-center mb-20">
-            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-50 mb-6">
+    <!-- Full-Width Hero Background Photo Section -->
+    <section class="hero-banner-container border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-6 py-28 lg:py-36 text-center">
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-50 mb-6 drop-shadow-md">
                 Flawless Finishes for Your<br> Home & Business
             </h1>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
+            <p class="text-xl text-gray-200 max-w-2xl mx-auto mb-12 drop-shadow">
                 Professional painting services across Calgary. Meticulous surface prep, sharp cut-in lines, and lasting results.
             </p>
-            <a href="#contact" class="btn-teal text-lg shadow-lg shadow-teal-900/50 inline-block">
+            <a href="#contact" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block">
                 Get Your Free Estimate
             </a>
         </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-6 py-16">
 
         <!-- Services Grid -->
         <section id="services" class="grid md:grid-cols-3 gap-8 mb-20">
