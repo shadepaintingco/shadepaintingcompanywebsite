@@ -88,11 +88,27 @@
         .hero-banner-container {
             position: relative;
             width: 100%;
-            background-image: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)), url('hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            overflow: hidden;
+            background-color: #111827;
         }
+        
+        /* Canvas background behind hero content */
+        #paintingCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
         .hero-animate-up {
             opacity: 0;
             transform: translateY(30px);
@@ -316,9 +332,12 @@
         </nav>
     </header>
 
-    <!-- Hero Banner Section -->
+    <!-- Hero Banner Section with Multi-Roller Painting Animation Canvas -->
     <section class="hero-banner-container border-b border-gray-700">
-        <div class="max-w-7xl mx-auto px-6 py-28 lg:py-36 text-center">
+        <!-- Paint Roller & Stroke Canvas Background -->
+        <canvas id="paintingCanvas"></canvas>
+
+        <div class="hero-content-wrapper max-w-7xl mx-auto px-6 py-28 lg:py-36 text-center">
             <h1 class="hero-animate-up text-5xl md:text-6xl font-extrabold tracking-tight text-gray-50 mb-6 drop-shadow-md">
                 Flawless Finishes for Your<br> Home & Business
             </h1>
@@ -424,7 +443,7 @@
                     </div>
                 </div>
 
-                <!-- Right Side: Interactive Before & After Slider (With Left-Right Horizontal Arrows Icon Graphic) -->
+                <!-- Right Side: Interactive Before & After Slider -->
                 <div>
                     <div class="ba-slider-container" id="baContainer">
                         <div class="ba-image-wrapper">
@@ -437,11 +456,10 @@
                             </div>
                         </div>
                         
-                        <!-- Divider Line & Handle with Horizontal Left/Right Arrows Graphic -->
+                        <!-- Divider Line & Handle -->
                         <div class="ba-slider-line" id="baLine">
                             <div class="ba-slider-button" title="Drag to Compare">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                                    <!-- Horizontal Left/Right Arrowheads & Shaft -->
                                     <path d="M6.5 12l4.5-4.5v3h3v-3L18.5 12l-4.5 4.5v-3h-3v3L6.5 12z" fill="none"/>
                                     <path d="M14 6l6 6-6 6V6zM10 18l-6-6 6-6v12z"/>
                                 </svg>
@@ -548,6 +566,165 @@
 
     <!-- Interactive Scripts -->
     <script>
+        // --- Detailed Multi-Line Painting Animation with Leading Icons ---
+        const canvas = document.getElementById('paintingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Painting strokes with consistent teal color styling
+        const paintingElements = [
+            // Primary paint roller stroke 1 (Horizontal sweep)
+            {
+                type: 'roller',
+                points: [
+                    {x: -50, y: canvas.height * 0.35},
+                    {x: canvas.width * 0.3, y: canvas.height * 0.28},
+                    {x: canvas.width * 0.7, y: canvas.height * 0.45},
+                    {x: canvas.width + 50, y: canvas.height * 0.38}
+                ],
+                color: 'rgba(20, 184, 166, 0.28)',
+                width: 110,
+                progress: 0,
+                speed: 0.003
+            },
+            // Secondary overlapping paint roller stroke 2
+            {
+                type: 'roller',
+                points: [
+                    {x: canvas.width + 50, y: canvas.height * 0.68},
+                    {x: canvas.width * 0.6, y: canvas.height * 0.78},
+                    {x: canvas.width * 0.3, y: canvas.height * 0.58},
+                    {x: -50, y: canvas.height * 0.62}
+                ],
+                color: 'rgba(45, 212, 191, 0.2)',
+                width: 130,
+                progress: 0,
+                speed: 0.0025
+            },
+            // Vertical line 1 (Cut-in paintbrush accent)
+            {
+                type: 'roller',
+                points: [
+                    {x: canvas.width * 0.25, y: -20},
+                    {x: canvas.width * 0.35, y: canvas.height * 0.5},
+                    {x: canvas.width * 0.3, y: canvas.height + 20}
+                ],
+                color: 'rgba(13, 148, 136, 0.22)',
+                width: 60,
+                progress: 0,
+                speed: 0.0035
+            },
+            // Vertical line 2 (Updated to match the cohesive teal theme)
+            {
+                type: 'roller',
+                points: [
+                    {x: canvas.width * 0.75, y: canvas.height + 20},
+                    {x: canvas.width * 0.7, y: canvas.height * 0.5},
+                    {x: canvas.width * 0.8, y: -20}
+                ],
+                color: 'rgba(20, 184, 166, 0.22)',
+                width: 70,
+                progress: 0,
+                speed: 0.003
+            }
+        ];
+
+        function animatePainting() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let allDone = true;
+            const activeTips = [];
+
+            paintingElements.forEach(el => {
+                if (el.progress < 1) {
+                    el.progress += el.speed;
+                    allDone = false;
+                }
+
+                const currentProgress = Math.min(el.progress, 1);
+                const getPoint = (t) => {
+                    const len = el.points.length - 1;
+                    const exact = t * len;
+                    const i = Math.floor(exact);
+                    const localT = exact - i;
+                    if (i >= len) return el.points[len];
+                    const p0 = el.points[i];
+                    const p1 = el.points[i + 1];
+                    return {
+                        x: p0.x + (p1.x - p0.x) * localT,
+                        y: p0.y + (p1.y - p0.y) * localT
+                    };
+                };
+
+                ctx.save();
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.lineWidth = el.width;
+                ctx.strokeStyle = el.color;
+
+                ctx.beginPath();
+                const steps = Math.floor(currentProgress * 100);
+                if (steps > 0) {
+                    const startPt = getPoint(0);
+                    ctx.moveTo(startPt.x, startPt.y);
+                    for (let s = 1; s <= steps; s++) {
+                        const pt = getPoint(s / 100);
+                        ctx.lineTo(pt.x, pt.y);
+                    }
+                    ctx.stroke();
+                }
+
+                // Collect the tip position for every active stroke that is currently painting
+                if (currentProgress > 0 && currentProgress < 1) {
+                    const pt = getPoint(currentProgress);
+                    const prevPt = getPoint(Math.max(0, currentProgress - 0.02));
+                    const angle = Math.atan2(pt.y - prevPt.y, pt.x - prevPt.x);
+                    activeTips.push({ x: pt.x, y: pt.y, angle: angle });
+                }
+
+                ctx.restore();
+            });
+
+            // Draw a paint roller icon at the leading edge of every active paint line
+            activeTips.forEach(tip => {
+                ctx.save();
+                ctx.translate(tip.x, tip.y);
+                ctx.rotate(tip.angle + Math.PI / 4);
+                
+                // Roller handle & cage
+                ctx.fillStyle = '#9CA3AF';
+                ctx.fillRect(2, -3, 14, 6);
+                ctx.strokeStyle = '#6B7280';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(-8, -10);
+                ctx.lineTo(2, -3);
+                ctx.lineTo(-8, 10);
+                ctx.stroke();
+
+                // Roller cylinder cover
+                ctx.fillStyle = '#14B8A6';
+                ctx.fillRect(-14, -14, 10, 28);
+                ctx.restore();
+            });
+
+            if (!allDone || activeTips.length > 0) {
+                requestAnimationFrame(animatePainting);
+            }
+        }
+
+        // Trigger animation on page load/refresh
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(animatePainting, 200);
+        });
+
+        // --- Before & After Slider Script ---
         const container = document.getElementById('baContainer');
         const rangeInput = document.getElementById('baRangeInput');
         const beforeWrapper = document.getElementById('baBeforeWrapper');
@@ -572,6 +749,7 @@
             });
         }
 
+        // --- Scroll Reveal Animation Observer ---
         const observerOptions = {
             threshold: 0.15,
             rootMargin: '0px 0px -50px 0px'
@@ -591,6 +769,7 @@
 
         document.querySelectorAll('.reveal-on-scroll, .badge-container').forEach(el => revealObserver.observe(el));
 
+        // --- Estimate Form Submission Handling ---
         const estimateForm = document.getElementById('estimateForm');
         const formSuccessMessage = document.getElementById('formSuccessMessage');
         const resetFormBtn = document.getElementById('resetFormBtn');
