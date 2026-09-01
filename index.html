@@ -17,6 +17,7 @@
         .nav-link {
             color: #9CA3AF;
             font-weight: 500;
+            transition: color 0.2s;
         }
         .nav-link:hover {
             color: #38BDF8;
@@ -28,6 +29,11 @@
             border: 1px solid #4B5563;
             padding: 2rem;
             border-radius: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card-dark:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .card-dark h3 {
             color: #F9FAFB;
@@ -54,6 +60,10 @@
             border-radius: 0.5rem;
             width: 100%;
         }
+        .form-input:focus {
+            outline: 2px solid #14B8A6;
+            border-color: transparent;
+        }
         .form-label {
             color: #D1D5DB;
             font-size: 0.875rem;
@@ -67,7 +77,7 @@
             font-weight: 600;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, transform 0.1s;
             white-space: nowrap;
         }
         .btn-teal:hover {
@@ -305,7 +315,7 @@
                         Local Painters You Can Rely On
                     </h2>
                     <p class="text-gray-300 text-lg leading-relaxed mb-8">
-                        With extensive painting and customer service experience, our business is committed to results that both revitalize and reshape your space- One coat at a time.
+                        With extensive painting and customer service experience, our business is committed to results that both revitalize and reshape your space—One coat at a time.
                     </p>
 
                     <!-- Checkmarks List -->
@@ -332,159 +342,146 @@
                         </div>
                         <div class="flex items-center space-x-3">
                             <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">Trust the Experts</span>
+                            <span class="text-gray-200 text-sm font-medium">Free Color Consultation</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Side: Interactive Photo Slider Box -->
-                <div class="ba-slider-container">
-                    <div class="ba-image-wrapper">
-                        <img src="after-photo.jpg" alt="After Painting" class="ba-img ba-after-img" />
-                        <div class="ba-before-wrapper">
-                            <img src="before-photo.jpg" alt="Before Painting" class="ba-img ba-before-img" />
+                <!-- Right Side: Interactive Before & After Slider -->
+                <div>
+                    <div class="ba-slider-container" id="baContainer">
+                        <div class="ba-image-wrapper">
+                            <!-- After Image (Background) -->
+                            <img src="after-img.jpg" alt="After Painting" class="ba-img">
+                            
+                            <!-- Before Image (Clipped Overlay) -->
+                            <div class="ba-before-wrapper" id="baBeforeWrapper">
+                                <img src="before-img.jpg" alt="Before Painting" class="ba-before-img" id="baBeforeImg">
+                            </div>
                         </div>
-                    </div>
-                    
-                    <input type="range" min="0" max="100" value="50" class="ba-slider" id="baSlider" aria-label="Before and after comparison slider" />
-                    <div class="ba-slider-line"></div>
-                    
-                    <div class="ba-slider-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2a2 2 0 0 0 2.8 0L19 11Z"/>
-                            <path d="m5 2 5 5"/>
-                            <path d="M2 13h15"/>
-                            <path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/>
-                        </svg>
+                        
+                        <!-- Divider Line & Handle -->
+                        <div class="ba-slider-line" id="baLine">
+                            <div class="ba-slider-button">↔</div>
+                        </div>
+
+                        <!-- Range Input Overlay -->
+                        <input type="range" min="0" max="100" value="50" class="ba-slider" id="baRangeInput" aria-label="Before and After Image Comparison Slider">
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- Animated Trust Badges Section -->
+        <!-- Trust Badges Section -->
         <section class="mb-20">
-            <div class="badge-container" id="badgeSection">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-100">Why Calgary Chooses Shade Painting Co.</h2>
+            </div>
+            <div class="badge-container" id="badgeContainer">
                 <div class="trust-badge">
-                    <h4>Fully Licensed and Insured</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>100% Customer Satisfaction Guaranteed</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>1 Year Workmanship Warranty</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>Proudly Servicing Calgary</h4>
+                    <h4>Fully Insured &amp; WCB Covered</h4>
                 </div>
                 <div class="trust-badge">
                     <h4>Easy Process, Amazing Results</h4>
                 </div>
                 <div class="trust-badge">
+                    <h4>Premium Low-VOC Paints</h4>
+                </div>
+                <div class="trust-badge">
                     <h4>Free Color Consultation</h4>
+                </div>
+                <div class="trust-badge">
+                    <h4>100% Satisfaction Guarantee</h4>
+                </div>
+                <div class="trust-badge">
+                    <h4>Detailed Prep &amp; Clean Site</h4>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="bg-gray-800/50 p-12 rounded-3xl border border-gray-700">
-            <div class="grid md:grid-cols-2 gap-12 items-start">
-                <div>
-                    <h2 class="text-4xl font-bold text-gray-50 mb-6">Request Your Estimate</h2>
-                    <p class="text-gray-300 mb-8">Fill out the form to schedule a consultation, or call us directly at <span class="font-semibold text-teal-300">403-805-4809</span>.</p>
-                    <div class="space-y-4 text-gray-300">
-                        <p>📍 Serving Calgary, AB and surrounding areas.</p>
-                        <p>📞 403-805-4809</p>
-                        <p>✉️ shadepaintingco@gmail.com</p>
+        <!-- Contact & Free Estimate Form Section -->
+        <section id="contact" class="max-w-3xl mx-auto form-bg-dark p-8 sm:p-12 shadow-2xl">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-extrabold text-gray-50 mb-2">Request Your Free Estimate</h2>
+                <p class="text-gray-300 text-sm">Tell us about your project and we'll get back to you within 24 hours.</p>
+            </div>
+            <form action="#" method="POST" class="space-y-6">
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+                    </div>
+                    <div>
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="(403) 555-0199" required>
                     </div>
                 </div>
-
-                <form action="https://formsubmit.co/shadepaintingco@gmail.com" method="POST" class="form-bg-dark p-8 space-y-5">
-                    <input type="hidden" name="_subject" value="New Estimate Request from Website">
-                    <input type="hidden" name="_captcha" value="false">
-
-                    <div>
-                        <label class="form-label">Full Name</label>
-                        <input type="text" name="name" required class="form-input" placeholder="John Doe">
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="form-label">Phone Number</label>
-                            <input type="tel" name="phone" required class="form-input" placeholder="403-000-0000">
-                        </div>
-                        <div>
-                            <label class="form-label">Email Address</label>
-                            <input type="email" name="email" required class="form-input" placeholder="john@email.com">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="form-label">Project Details (Interior, Exterior, Touch-ups, etc.)</label>
-                        <textarea name="message" rows="4" required class="form-input resize-none" placeholder="Describe your project requirements..."></textarea>
-                    </div>
-
-                    <button type="submit" class="w-full btn-teal !py-3 text-base">
-                        Submit Request
-                    </button>
-                </form>
-            </div>
+                <div>
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+                </div>
+                <div>
+                    <label for="service" class="form-label">Service Required</label>
+                    <select id="service" name="service" class="form-input">
+                        <option value="interior">Interior Painting</option>
+                        <option value="exterior">Exterior Painting</option>
+                        <option value="commercial">Commercial Painting</option>
+                        <option value="other">Other / Touch-Ups</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="message" class="form-label">Project Details</label>
+                    <textarea id="message" name="message" rows="4" class="form-input" placeholder="Describe the scope of work (e.g., 3 bedrooms, ceiling height, exterior trim)..."></textarea>
+                </div>
+                <button type="submit" class="btn-teal w-full text-center text-base py-3">Submit Estimate Request</button>
+            </form>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-700 mt-24 py-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 Shade Painting Co. All rights reserved. Proudly serving Calgary, Alberta.</p>
-        <p class="mt-1">Call: 403-805-4809 | Email: shadepaintingco@gmail.com</p>
+    <footer class="border-t border-gray-700 bg-gray-900 mt-20 py-8 text-center text-gray-400 text-sm">
+        <p>&copy; 2026 Shade Painting Co. All rights reserved. Servicing Calgary, AB &amp; Surrounding Areas.</p>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Interactive Scripts -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Trust Badges Observer
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const badges = entry.target.querySelectorAll('.trust-badge');
-                        badges.forEach(badge => badge.classList.add('visible'));
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15 });
+        // 1. Before/After Interactive Slider Logic
+        const container = document.getElementById('baContainer');
+        const rangeInput = document.getElementById('baRangeInput');
+        const beforeWrapper = document.getElementById('baBeforeWrapper');
+        const beforeImg = document.getElementById('baBeforeImg');
+        const line = document.getElementById('baLine');
 
-            const badgeSection = document.getElementById('badgeSection');
-            if (badgeSection) {
-                observer.observe(badgeSection);
+        function updateSliderWidth() {
+            if (container) {
+                beforeImg.style.width = container.offsetWidth + 'px';
             }
+        }
 
-            // Before & After Interactive Slider Logic
-            const slider = document.getElementById('baSlider');
-            const beforeWrapper = document.querySelector('.ba-before-wrapper');
-            const beforeImg = document.querySelector('.ba-before-img');
-            const sliderLine = document.querySelector('.ba-slider-line');
-            const sliderBtn = document.querySelector('.ba-slider-button');
-            const container = document.querySelector('.ba-slider-container');
+        window.addEventListener('resize', updateSliderWidth);
+        updateSliderWidth();
 
-            function updateSliderWidth() {
-                if (container && beforeImg) {
-                    beforeImg.style.width = container.offsetWidth + 'px';
+        if (rangeInput) {
+            rangeInput.addEventListener('input', (e) => {
+                const val = e.target.value;
+                beforeWrapper.style.width = val + '%';
+                line.style.left = val + '%';
+            });
+        }
+
+        // 2. Trust Badges Scroll Animation (IntersectionObserver)
+        const badges = document.querySelectorAll('.trust-badge');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
-            }
+            });
+        }, { threshold: 0.2 });
 
-            if (slider) {
-                slider.addEventListener('input', (e) => {
-                    const val = e.target.value;
-                    beforeWrapper.style.width = `${val}%`;
-                    sliderLine.style.left = `${val}%`;
-                    sliderBtn.style.left = `${val}%`;
-                });
-            }
-
-            window.addEventListener('load', updateSliderWidth);
-            window.addEventListener('resize', updateSliderWidth);
-            updateSliderWidth();
-        });
+        badges.forEach(badge => observer.observe(badge));
     </script>
 </body>
 </html>
