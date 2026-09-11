@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -316,12 +316,19 @@
             display: block;
         }
 
-        /* Page View Switcher Control */
+        /* Page View Transition Animation */
         .page-view {
             display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .page-view.active {
             display: block;
+        }
+        .page-view.fade-in {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -330,22 +337,22 @@
     <!-- Header -->
     <header class="border-b border-gray-700/80 sticky top-0 z-50 bg-gray-800/90 backdrop-blur-md">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-            <a href="#" onclick="switchPage('home'); return false;" class="flex items-center space-x-3 group">
+            <a href="#" onclick="navigateToHomeTop(); return false;" class="flex items-center space-x-3 group">
                 <img src="logo.png" alt="Shade Painting Co. Logo" class="transition-transform duration-300 group-hover:scale-105" style="width: 80px; height: 80px; object-fit: contain; display: block;">
                 <span class="text-lg sm:text-xl font-bold tracking-tight text-white whitespace-nowrap">SHADE <span class="text-teal-400">PAINTING CO.</span></span>
             </a>
             <div class="flex items-center space-x-4 sm:space-x-8">
-                <button onclick="switchPage('home');" class="nav-link text-sm sm:text-base">Home</button>
+                <button onclick="navigateToHomeTop();" class="nav-link text-sm sm:text-base">Home</button>
                 <button onclick="switchPage('about');" class="nav-link text-sm sm:text-base">About</button>
-                <button onclick="switchPage('home'); scrollToSection('services');" class="nav-link text-sm sm:text-base hidden sm:inline-block">Services</button>
-                <button onclick="switchPage('home'); scrollToSection('contact');" class="nav-link text-sm sm:text-base hidden sm:inline-block">Contact</button>
-                <button onclick="switchPage('home'); scrollToSection('contact');" class="btn-teal text-sm sm:text-base">Get Your Free Estimate</button>
+                <button onclick="navigateToHomeSection('services');" class="nav-link text-sm sm:text-base hidden sm:inline-block">Services</button>
+                <button onclick="navigateToHomeSection('contact');" class="nav-link text-sm sm:text-base hidden sm:inline-block">Contact</button>
+                <button onclick="navigateToHomeSection('contact');" class="btn-teal text-sm sm:text-base">Get Your Free Estimate</button>
             </div>
         </nav>
     </header>
 
     <!-- ================= PAGE 1: HOME (Landing Page) ================= -->
-    <div id="page-home" class="page-view active">
+    <div id="page-home" class="page-view active fade-in">
         <!-- Hero Banner Section with Multi-Roller Painting Animation Canvas -->
         <section class="hero-banner-container border-b border-gray-700">
             <!-- Paint Roller & Stroke Canvas Background -->
@@ -359,7 +366,7 @@
                     Professional painting services across Calgary. Meticulous surface prep, sharp cut-in lines, and lasting results.
                 </p>
                 <div class="hero-animate-up hero-delay-2">
-                    <button onclick="scrollToSection('contact')" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block cursor-pointer">
+                    <button onclick="navigateToHomeSection('contact')" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block cursor-pointer">
                         Get Your Free Estimate
                     </button>
                 </div>
@@ -370,7 +377,7 @@
         <main class="max-w-7xl mx-auto px-6 py-16">
 
             <!-- Services Grid -->
-            <section id="services" class="grid md:grid-cols-3 gap-8 mb-20">
+            <section id="services" class="grid md:grid-cols-3 gap-8 mb-20" style="scroll-margin-top: 180px;">
                 <div class="card-dark flex items-start gap-4 reveal-on-scroll">
                     <div class="icon-teal text-2xl">🏠</div>
                     <div>
@@ -516,7 +523,7 @@
             </section>
 
             <!-- Contact & Free Estimate Form Section -->
-            <section id="contact" class="max-w-3xl mx-auto form-bg-dark p-8 sm:p-12 shadow-2xl reveal-on-scroll">
+            <section id="contact" class="max-w-3xl mx-auto form-bg-dark p-8 sm:p-12 shadow-2xl reveal-on-scroll" style="scroll-margin-top: 180px;">
                 <div class="text-center mb-8">
                     <h2 class="text-3xl font-extrabold text-gray-50 mb-2">Request Your Free Estimate</h2>
                     <p class="text-gray-300 text-sm">Tell us about your project and we'll get back to you within 24 hours.</p>
@@ -588,8 +595,8 @@
                     <!-- Heritage Photo Container -->
                     <div class="mb-12">
                         <div class="relative w-full aspect-video bg-gray-900 rounded-2xl border border-gray-700 overflow-hidden shadow-2xl flex items-center justify-center group">
-                            <!-- Replace 'heritage-painting-photo.jpg' with your old heritage painting photo file path -->
-                            <img src="heritage-painting-photo.jpg" alt="Chinook Painting LTD Heritage Photo (1983)" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <!-- Heritage Photo of Painter from Behind -->
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop" alt="Chinook Painting LTD Heritage Photo (1983)" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="absolute inset-0 hidden flex-col items-center justify-center p-6 text-center bg-gray-900/90">
                                 <span class="text-teal-400 text-3xl mb-2">🖼️</span>
                                 <p class="text-gray-300 font-medium text-sm sm:text-base">Upload your old heritage painting photo here</p>
@@ -657,7 +664,7 @@
                     <!-- Action Button Back to Contact / Estimate Form -->
                     <div class="text-center">
                         <p class="text-gray-300 mb-4 font-medium">Ready to transform your space? Let’s bring your vision to life.</p>
-                        <button onclick="switchPage('home'); scrollToSection('contact');" class="btn-teal inline-block text-lg px-8 py-4 shadow-lg shadow-teal-950/50 cursor-pointer">
+                        <button onclick="navigateToHomeSection('contact');" class="btn-teal inline-block text-lg px-8 py-4 shadow-lg shadow-teal-950/50 cursor-pointer">
                             Book Your Free Estimate
                         </button>
                     </div>
@@ -674,33 +681,105 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // --- Page View Switcher ---
-        function switchPage(pageId) {
-            document.querySelectorAll('.page-view').forEach(view => {
-                view.classList.remove('active');
-            });
-            const target = document.getElementById('page-' + pageId);
-            if (target) {
-                target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+        // --- Custom Smooth Scroll Animation with Cubic Easing ---
+        function smoothScrollTo(targetY, duration = 800) {
+            const startY = window.pageYOffset;
+            const distance = targetY - startY;
+            let startTime = null;
+
+            function animation(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const progress = Math.min(timeElapsed / duration, 1);
                 
-                // If switching back to home, re-trigger canvas resize & animation cleanly
-                if (pageId === 'home') {
-                    setTimeout(() => {
-                        resizeCanvas();
-                        restartAnimation();
-                    }, 50);
+                // Ease in out cubic calculation for buttery smooth acceleration and deceleration
+                const ease = progress < 0.5 
+                    ? 4 * progress * progress * progress 
+                    : (progress - 1) * (2 * progress - 2) * (2 * progress - 2) + 1;
+
+                window.scrollTo(0, startY + distance * ease);
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
                 }
+            }
+
+            requestAnimationFrame(animation);
+        }
+
+        // --- Smooth Animated Page View Switcher ---
+        function switchPage(pageId) {
+            const currentActive = document.querySelector('.page-view.active');
+            const target = document.getElementById('page-' + pageId);
+            
+            if (target && target !== currentActive) {
+                // Fade out current page
+                if (currentActive) {
+                    currentActive.classList.remove('fade-in');
+                }
+
+                setTimeout(() => {
+                    document.querySelectorAll('.page-view').forEach(view => {
+                        view.classList.remove('active');
+                    });
+                    
+                    target.classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'auto' });
+
+                    // Trigger fade in animation
+                    setTimeout(() => {
+                        target.classList.add('fade-in');
+                    }, 30);
+
+                    // If switching back to home, re-trigger canvas resize & animation cleanly
+                    if (pageId === 'home') {
+                        setTimeout(() => {
+                            resizeCanvas();
+                            restartAnimation();
+                        }, 50);
+                    }
+                }, 200);
             }
         }
 
-        function scrollToSection(sectionId) {
-            setTimeout(() => {
+        // Routes to Home view and smoothly scrolls to the very top
+        function navigateToHomeTop() {
+            const currentActive = document.querySelector('.page-view.active');
+            const homeTarget = document.getElementById('page-home');
+
+            if (currentActive !== homeTarget) {
+                switchPage('home');
+                setTimeout(() => {
+                    smoothScrollTo(0, 900);
+                }, 250);
+            } else {
+                smoothScrollTo(0, 800);
+            }
+        }
+
+        // Routes to Home view (if on About) and smoothly glides to a section with custom animation and header clearance
+        function navigateToHomeSection(sectionId) {
+            const currentActive = document.querySelector('.page-view.active');
+            const homeTarget = document.getElementById('page-home');
+
+            const executeScroll = () => {
                 const el = document.getElementById(sectionId);
                 if (el) {
-                    el.scrollIntoView({ behavior: 'smooth' });
+                    const headerOffset = 180; // Increased clearance below the sticky header
+                    const elementPosition = el.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    smoothScrollTo(offsetPosition, 900);
                 }
-            }, 100);
+            };
+
+            if (currentActive !== homeTarget) {
+                switchPage('home');
+                setTimeout(() => {
+                    executeScroll();
+                }, 350);
+            } else {
+                executeScroll();
+            }
         }
 
         // --- Detailed Multi-Line Painting Animation with Leading Icons ---
