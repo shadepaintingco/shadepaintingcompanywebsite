@@ -359,9 +359,9 @@
                     Professional painting services across Calgary. Meticulous surface prep, sharp cut-in lines, and lasting results.
                 </p>
                 <div class="hero-animate-up hero-delay-2">
-                    <a href="#contact" onclick="scrollToSection('contact')" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block">
+                    <button onclick="scrollToSection('contact')" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block cursor-pointer">
                         Get Your Free Estimate
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
@@ -657,7 +657,7 @@
                     <!-- Action Button Back to Contact / Estimate Form -->
                     <div class="text-center">
                         <p class="text-gray-300 mb-4 font-medium">Ready to transform your space? Let’s bring your vision to life.</p>
-                        <button onclick="switchPage('home'); scrollToSection('contact');" class="btn-teal inline-block text-lg px-8 py-4 shadow-lg shadow-teal-950/50">
+                        <button onclick="switchPage('home'); scrollToSection('contact');" class="btn-teal inline-block text-lg px-8 py-4 shadow-lg shadow-teal-950/50 cursor-pointer">
                             Book Your Free Estimate
                         </button>
                     </div>
@@ -683,6 +683,14 @@
             if (target) {
                 target.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // If switching back to home, re-trigger canvas resize & animation cleanly
+                if (pageId === 'home') {
+                    setTimeout(() => {
+                        resizeCanvas();
+                        restartAnimation();
+                    }, 50);
+                }
             }
         }
 
@@ -697,7 +705,7 @@
 
         // --- Detailed Multi-Line Painting Animation with Leading Icons ---
         const canvas = document.getElementById('paintingCanvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas ? canvas.getContext('2d') : null;
 
         function resizeCanvas() {
             if (canvas && canvas.parentElement) {
@@ -708,37 +716,70 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const paintingElements = [
-            {
-                type: 'roller',
-                points: [
-                    {x: -50, y: 140},
-                    {x: 300, y: 110},
-                    {x: 700, y: 180},
-                    {x: 1200, y: 150}
-                ],
-                color: 'rgba(20, 184, 166, 0.28)',
-                width: 110,
-                progress: 0,
-                speed: 0.003
-            },
-            {
-                type: 'roller',
-                points: [
-                    {x: 1200, y: 280},
-                    {x: 800, y: 320},
-                    {x: 400, y: 240},
-                    {x: -50, y: 260}
-                ],
-                color: 'rgba(45, 212, 191, 0.2)',
-                width: 130,
-                progress: 0,
-                speed: 0.0025
-            }
-        ];
+        let paintingElements = [];
+        let animationFrameId = null;
+
+        function initAnimationElements() {
+            if (!canvas) return;
+            const w = canvas.width;
+            const h = canvas.height;
+
+            paintingElements = [
+                {
+                    type: 'roller',
+                    points: [
+                        {x: -50, y: h * 0.35},
+                        {x: w * 0.3, y: h * 0.28},
+                        {x: w * 0.7, y: h * 0.45},
+                        {x: w + 50, y: h * 0.38}
+                    ],
+                    color: 'rgba(20, 184, 166, 0.28)',
+                    width: 110,
+                    progress: 0,
+                    speed: 0.003
+                },
+                {
+                    type: 'roller',
+                    points: [
+                        {x: w + 50, y: h * 0.68},
+                        {x: w * 0.6, y: h * 0.78},
+                        {x: w * 0.3, y: h * 0.58},
+                        {x: -50, y: h * 0.62}
+                    ],
+                    color: 'rgba(45, 212, 191, 0.2)',
+                    width: 130,
+                    progress: 0,
+                    speed: 0.0025
+                },
+                {
+                    type: 'roller',
+                    points: [
+                        {x: w * 0.25, y: -20},
+                        {x: w * 0.35, y: h * 0.5},
+                        {x: w * 0.3, y: h + 20}
+                    ],
+                    color: 'rgba(13, 148, 136, 0.22)',
+                    width: 60,
+                    progress: 0,
+                    speed: 0.0035
+                },
+                {
+                    type: 'roller',
+                    points: [
+                        {x: w * 0.75, y: h + 20},
+                        {x: w * 0.7, y: h * 0.5},
+                        {x: w * 0.8, y: -20}
+                    ],
+                    color: 'rgba(20, 184, 166, 0.22)',
+                    width: 70,
+                    progress: 0,
+                    speed: 0.003
+                }
+            ];
+        }
 
         function animatePainting() {
-            if (!canvas) return;
+            if (!canvas || !ctx) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             let allDone = true;
@@ -814,12 +855,23 @@
             });
 
             if (!allDone || activeTips.length > 0) {
-                requestAnimationFrame(animatePainting);
+                animationFrameId = requestAnimationFrame(animatePainting);
             }
         }
 
+        function restartAnimation() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            initAnimationElements();
+            animatePainting();
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(animatePainting, 200);
+            setTimeout(() => {
+                resizeCanvas();
+                restartAnimation();
+            }, 200);
         });
 
         // --- Before & After Slider Script ---
