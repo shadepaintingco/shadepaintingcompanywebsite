@@ -25,6 +25,7 @@
             font-weight: 500;
             transition: color 0.25s ease, transform 0.25s ease;
             display: inline-block;
+            cursor: pointer;
         }
         .nav-link:hover {
             color: #38BDF8;
@@ -74,6 +75,8 @@
             white-space: nowrap;
             position: relative;
             overflow: hidden;
+            display: inline-block;
+            text-align: center;
         }
         .btn-teal:hover {
             background-color: #0D9488;
@@ -92,7 +95,6 @@
             background-color: #111827;
         }
         
-        /* Canvas background behind hero content */
         #paintingCanvas {
             position: absolute;
             top: 0;
@@ -313,6 +315,14 @@
             margin-bottom: 0.5rem;
             display: block;
         }
+
+        /* Page View Switcher Control */
+        .page-view {
+            display: none;
+        }
+        .page-view.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -320,244 +330,342 @@
     <!-- Header -->
     <header class="border-b border-gray-700/80 sticky top-0 z-50 bg-gray-800/90 backdrop-blur-md">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-            <a href="#" class="flex items-center space-x-3 group">
+            <a href="#" onclick="switchPage('home'); return false;" class="flex items-center space-x-3 group">
                 <img src="logo.png" alt="Shade Painting Co. Logo" class="transition-transform duration-300 group-hover:scale-105" style="width: 80px; height: 80px; object-fit: contain; display: block;">
                 <span class="text-lg sm:text-xl font-bold tracking-tight text-white whitespace-nowrap">SHADE <span class="text-teal-400">PAINTING CO.</span></span>
             </a>
             <div class="flex items-center space-x-4 sm:space-x-8">
-                <a href="#services" class="nav-link text-sm sm:text-base hidden sm:inline-block">Services</a>
-                <a href="#contact" class="nav-link text-sm sm:text-base hidden sm:inline-block">Contact</a>
-                <a href="#contact" class="btn-teal text-sm sm:text-base">Get Your Free Estimate</a>
+                <button onclick="switchPage('home');" class="nav-link text-sm sm:text-base">Home</button>
+                <button onclick="switchPage('about');" class="nav-link text-sm sm:text-base">About</button>
+                <button onclick="switchPage('home'); scrollToSection('services');" class="nav-link text-sm sm:text-base hidden sm:inline-block">Services</button>
+                <button onclick="switchPage('home'); scrollToSection('contact');" class="nav-link text-sm sm:text-base hidden sm:inline-block">Contact</button>
+                <button onclick="switchPage('home'); scrollToSection('contact');" class="btn-teal text-sm sm:text-base">Get Your Free Estimate</button>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Banner Section with Multi-Roller Painting Animation Canvas -->
-    <section class="hero-banner-container border-b border-gray-700">
-        <!-- Paint Roller & Stroke Canvas Background -->
-        <canvas id="paintingCanvas"></canvas>
+    <!-- ================= PAGE 1: HOME (Landing Page) ================= -->
+    <div id="page-home" class="page-view active">
+        <!-- Hero Banner Section with Multi-Roller Painting Animation Canvas -->
+        <section class="hero-banner-container border-b border-gray-700">
+            <!-- Paint Roller & Stroke Canvas Background -->
+            <canvas id="paintingCanvas"></canvas>
 
-        <div class="hero-content-wrapper max-w-7xl mx-auto px-6 py-28 lg:py-36 text-center">
-            <h1 class="hero-animate-up text-5xl md:text-6xl font-extrabold tracking-tight text-gray-50 mb-6 drop-shadow-md">
-                Flawless Finishes for Your<br> Home & Business
-            </h1>
-            <p class="hero-animate-up hero-delay-1 text-xl text-gray-200 max-w-2xl mx-auto mb-12 drop-shadow">
-                Professional painting services across Calgary. Meticulous surface prep, sharp cut-in lines, and lasting results.
-            </p>
-            <div class="hero-animate-up hero-delay-2">
-                <a href="#contact" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block">
-                    Get Your Free Estimate
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-16">
-
-        <!-- Services Grid -->
-        <section id="services" class="grid md:grid-cols-3 gap-8 mb-20">
-            <div class="card-dark flex items-start gap-4 reveal-on-scroll">
-                <div class="icon-teal text-2xl">🏠</div>
-                <div>
-                    <h3>Interior Painting</h3>
-                    <p>Complete residential painting including walls, ceilings, doors, and detailed trim work with crisp lines.</p>
-                </div>
-            </div>
-            <div class="card-dark flex items-start gap-4 reveal-on-scroll">
-                <div class="icon-teal text-2xl">🌲</div>
-                <div>
-                    <h3>Exterior Painting</h3>
-                    <p>Protect and refresh your property's exterior with durable coatings built to withstand Calgary's weather.</p>
-                </div>
-            </div>
-            <div class="card-dark flex items-start gap-4 reveal-on-scroll">
-                <div class="icon-teal text-2xl">🏢</div>
-                <div>
-                    <h3>Commercial Painting</h3>
-                    <p>Professional painting solutions for offices, retail, and commercial spaces tailored to your schedule.</p>
-                </div>
-            </div>
-            <div class="card-dark flex items-start gap-4 reveal-on-scroll">
-                <div class="icon-teal text-2xl">🎨</div>
-                <div>
-                    <h3>Colour Matching</h3>
-                    <p>Expert shade and color matching to seamlessly blend new paint with existing walls or bring your design vision to life.</p>
-                </div>
-            </div>
-            <div class="card-dark flex items-start gap-4 reveal-on-scroll">
-                <div class="icon-teal text-2xl">✨</div>
-                <div>
-                    <h3>Touch-Ups & Repairs</h3>
-                    <p>Quick and seamless touch-ups, drywall patching, and surface repairs to keep your space looking pristine.</p>
-                </div>
-            </div>
-            <div class="card-dark flex items-start gap-4 reveal-on-scroll">
-                <div class="icon-teal text-2xl">📋</div>
-                <div>
-                    <h3>Free Estimates</h3>
-                    <p>Transparent, no-obligation quotes for any scale of project, backed by honest communication and expert advice.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Before and After Interactive Slider Section -->
-        <section class="mb-20 bg-gray-800/50 p-8 sm:p-12 rounded-3xl border border-gray-700 reveal-on-scroll">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                
-                <!-- Left Side -->
-                <div>
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-50 mb-6 leading-tight">
-                        Local Painters You Can Rely On
-                    </h2>
-                    <p class="text-gray-300 text-lg leading-relaxed mb-8">
-                        With extensive painting and customer service experience, our business is committed to results that both revitalize and reshape your space—One coat at a time.
-                    </p>
-
-                    <!-- Checkmarks List -->
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">Invest in the Value of Your Home</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">We Work on Your Schedule</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">Repaints &amp; Renovations</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">Inside or Outside - We'll Get it Done</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">Liven Up Your Space</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-teal-400 font-bold text-xl">✓</span>
-                            <span class="text-gray-200 text-sm font-medium">Free Color Consultation</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Side: Interactive Before & After Slider -->
-                <div>
-                    <div class="ba-slider-container" id="baContainer">
-                        <div class="ba-image-wrapper">
-                            <!-- After Image -->
-                            <img src="after-photo.jpg" alt="After Painting" class="ba-img">
-                            
-                            <!-- Before Image Overlay -->
-                            <div class="ba-before-wrapper" id="baBeforeWrapper">
-                                <img src="before-photo.jpg" alt="Before Painting" class="ba-before-img" id="baBeforeImg">
-                            </div>
-                        </div>
-                        
-                        <!-- Divider Line & Handle -->
-                        <div class="ba-slider-line" id="baLine">
-                            <div class="ba-slider-button" title="Drag to Compare">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                                    <path d="M6.5 12l4.5-4.5v3h3v-3L18.5 12l-4.5 4.5v-3h-3v3L6.5 12z" fill="none"/>
-                                    <path d="M14 6l6 6-6 6V6zM10 18l-6-6 6-6v12z"/>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- Range Input -->
-                        <input type="range" min="0" max="100" value="50" class="ba-slider" id="baRangeInput" aria-label="Before and After Image Comparison Slider">
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Trust Badges Section -->
-        <section class="mb-20 reveal-on-scroll">
-            <div class="text-center mb-10">
-                <h2 class="text-2xl sm:text-3xl font-bold text-gray-100">Why Calgary Chooses Shade Painting Co.</h2>
-            </div>
-            <div class="badge-container" id="badgeContainer">
-                <div class="trust-badge">
-                    <h4>Fully Insured &amp; Licensed</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>Easy Process, Amazing Results</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>Premium Low-VOC Paints</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>Free Color Consultation</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>100% Satisfaction Guarantee</h4>
-                </div>
-                <div class="trust-badge">
-                    <h4>Detailed Prep &amp; Clean Site</h4>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact & Free Estimate Form Section -->
-        <section id="contact" class="max-w-3xl mx-auto form-bg-dark p-8 sm:p-12 shadow-2xl reveal-on-scroll">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-extrabold text-gray-50 mb-2">Request Your Free Estimate</h2>
-                <p class="text-gray-300 text-sm">Tell us about your project and we'll get back to you within 24 hours.</p>
-            </div>
-            
-            <!-- Estimate Form -->
-            <form id="estimateForm" action="#" method="POST" class="space-y-6">
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="form-label">Full Name</label>
-                        <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
-                    </div>
-                    <div>
-                        <label for="phone" class="form-label">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="(403) 555-0199" required>
-                    </div>
-                </div>
-                <div>
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
-                </div>
-                <div>
-                    <label for="service" class="form-label">Service Required</label>
-                    <select id="service" name="service" class="form-input">
-                        <option value="interior">Interior Painting</option>
-                        <option value="exterior">Exterior Painting</option>
-                        <option value="commercial">Commercial Painting</option>
-                        <option value="other">Other / Touch-Ups</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="message" class="form-label">Project Details</label>
-                    <textarea id="message" name="message" rows="4" class="form-input" placeholder="Describe the scope of work (e.g., 3 bedrooms, ceiling height, exterior trim)..."></textarea>
-                </div>
-                <button type="submit" class="btn-teal w-full text-center text-base py-3">Submit Estimate Request</button>
-            </form>
-
-            <!-- Success Confirmation State (Hidden by Default) -->
-            <div id="formSuccessMessage" class="hidden text-center py-10 space-y-4">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-teal-500/20 text-teal-400 rounded-full text-3xl mb-2">
-                    ✓
-                </div>
-                <h3 class="text-2xl font-bold text-white">Estimate Request Received!</h3>
-                <p class="text-gray-300 max-w-md mx-auto text-sm leading-relaxed">
-                    Thank you for reaching out. One of our painting specialists will review your project details and get back to you within 24 hours.
+            <div class="hero-content-wrapper max-w-7xl mx-auto px-6 py-28 lg:py-36 text-center">
+                <h1 class="hero-animate-up text-5xl md:text-6xl font-extrabold tracking-tight text-gray-50 mb-6 drop-shadow-md">
+                    Flawless Finishes for Your<br> Home & Business
+                </h1>
+                <p class="hero-animate-up hero-delay-1 text-xl text-gray-200 max-w-2xl mx-auto mb-12 drop-shadow">
+                    Professional painting services across Calgary. Meticulous surface prep, sharp cut-in lines, and lasting results.
                 </p>
-                <div class="pt-4">
-                    <button type="button" id="resetFormBtn" class="text-teal-400 hover:text-teal-300 text-sm font-semibold underline underline-offset-4">
-                        Send another request
-                    </button>
+                <div class="hero-animate-up hero-delay-2">
+                    <a href="#contact" onclick="scrollToSection('contact')" class="btn-teal text-lg shadow-xl shadow-teal-950/80 inline-block">
+                        Get Your Free Estimate
+                    </a>
                 </div>
             </div>
         </section>
 
-    </main>
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-6 py-16">
+
+            <!-- Services Grid -->
+            <section id="services" class="grid md:grid-cols-3 gap-8 mb-20">
+                <div class="card-dark flex items-start gap-4 reveal-on-scroll">
+                    <div class="icon-teal text-2xl">🏠</div>
+                    <div>
+                        <h3>Interior Painting</h3>
+                        <p>Complete residential painting including walls, ceilings, doors, and detailed trim work with crisp lines.</p>
+                    </div>
+                </div>
+                <div class="card-dark flex items-start gap-4 reveal-on-scroll">
+                    <div class="icon-teal text-2xl">🌲</div>
+                    <div>
+                        <h3>Exterior Painting</h3>
+                        <p>Protect and refresh your property's exterior with durable coatings built to withstand Calgary's weather.</p>
+                    </div>
+                </div>
+                <div class="card-dark flex items-start gap-4 reveal-on-scroll">
+                    <div class="icon-teal text-2xl">🏢</div>
+                    <div>
+                        <h3>Commercial Painting</h3>
+                        <p>Professional painting solutions for offices, retail, and commercial spaces tailored to your schedule.</p>
+                    </div>
+                </div>
+                <div class="card-dark flex items-start gap-4 reveal-on-scroll">
+                    <div class="icon-teal text-2xl">🎨</div>
+                    <div>
+                        <h3>Colour Matching</h3>
+                        <p>Expert shade and color matching to seamlessly blend new paint with existing walls or bring your design vision to life.</p>
+                    </div>
+                </div>
+                <div class="card-dark flex items-start gap-4 reveal-on-scroll">
+                    <div class="icon-teal text-2xl">✨</div>
+                    <div>
+                        <h3>Touch-Ups & Repairs</h3>
+                        <p>Quick and seamless touch-ups, drywall patching, and surface repairs to keep your space looking pristine.</p>
+                    </div>
+                </div>
+                <div class="card-dark flex items-start gap-4 reveal-on-scroll">
+                    <div class="icon-teal text-2xl">📋</div>
+                    <div>
+                        <h3>Free Estimates</h3>
+                        <p>Transparent, no-obligation quotes for any scale of project, backed by honest communication and expert advice.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Before and After Interactive Slider Section -->
+            <section class="mb-20 bg-gray-800/50 p-8 sm:p-12 rounded-3xl border border-gray-700 reveal-on-scroll">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Left Side -->
+                    <div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-50 mb-6 leading-tight">
+                            Local Painters You Can Rely On
+                        </h2>
+                        <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                            With extensive painting and customer service experience, our business is committed to results that both revitalize and reshape your space—One coat at a time.
+                        </p>
+
+                        <!-- Checkmarks List -->
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-teal-400 font-bold text-xl">✓</span>
+                                <span class="text-gray-200 text-sm font-medium">Invest in the Value of Your Home</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-teal-400 font-bold text-xl">✓</span>
+                                <span class="text-gray-200 text-sm font-medium">We Work on Your Schedule</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-teal-400 font-bold text-xl">✓</span>
+                                <span class="text-gray-200 text-sm font-medium">Repaints &amp; Renovations</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-teal-400 font-bold text-xl">✓</span>
+                                <span class="text-gray-200 text-sm font-medium">Inside or Outside - We'll Get it Done</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-teal-400 font-bold text-xl">✓</span>
+                                <span class="text-gray-200 text-sm font-medium">Liven Up Your Space</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-teal-400 font-bold text-xl">✓</span>
+                                <span class="text-gray-200 text-sm font-medium">Free Color Consultation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Interactive Before & After Slider -->
+                    <div>
+                        <div class="ba-slider-container" id="baContainer">
+                            <div class="ba-image-wrapper">
+                                <!-- After Image -->
+                                <img src="after-photo.jpg" alt="After Painting" class="ba-img">
+                                
+                                <!-- Before Image Overlay -->
+                                <div class="ba-before-wrapper" id="baBeforeWrapper">
+                                    <img src="before-photo.jpg" alt="Before Painting" class="ba-before-img" id="baBeforeImg">
+                                </div>
+                            </div>
+                            
+                            <!-- Divider Line & Handle -->
+                            <div class="ba-slider-line" id="baLine">
+                                <div class="ba-slider-button" title="Drag to Compare">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                                        <path d="M6.5 12l4.5-4.5v3h3v-3L18.5 12l-4.5 4.5v-3h-3v3L6.5 12z" fill="none"/>
+                                        <path d="M14 6l6 6-6 6V6zM10 18l-6-6 6-6v12z"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Range Input -->
+                            <input type="range" min="0" max="100" value="50" class="ba-slider" id="baRangeInput" aria-label="Before and After Image Comparison Slider">
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Trust Badges Section -->
+            <section class="mb-20 reveal-on-scroll">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-100">Why Calgary Chooses Shade Painting Co.</h2>
+                </div>
+                <div class="badge-container" id="badgeContainer">
+                    <div class="trust-badge">
+                        <h4>Fully Insured &amp; Licensed</h4>
+                    </div>
+                    <div class="trust-badge">
+                        <h4>Easy Process, Amazing Results</h4>
+                    </div>
+                    <div class="trust-badge">
+                        <h4>Premium Low-VOC Paints</h4>
+                    </div>
+                    <div class="trust-badge">
+                        <h4>Free Color Consultation</h4>
+                    </div>
+                    <div class="trust-badge">
+                        <h4>100% Satisfaction Guarantee</h4>
+                    </div>
+                    <div class="trust-badge">
+                        <h4>Detailed Prep &amp; Clean Site</h4>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact & Free Estimate Form Section -->
+            <section id="contact" class="max-w-3xl mx-auto form-bg-dark p-8 sm:p-12 shadow-2xl reveal-on-scroll">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-extrabold text-gray-50 mb-2">Request Your Free Estimate</h2>
+                    <p class="text-gray-300 text-sm">Tell us about your project and we'll get back to you within 24 hours.</p>
+                </div>
+                
+                <!-- Estimate Form -->
+                <form id="estimateForm" action="#" method="POST" class="space-y-6">
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="(403) 555-0199" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+                    </div>
+                    <div>
+                        <label for="service" class="form-label">Service Required</label>
+                        <select id="service" name="service" class="form-input">
+                            <option value="interior">Interior Painting</option>
+                            <option value="exterior">Exterior Painting</option>
+                            <option value="commercial">Commercial Painting</option>
+                            <option value="other">Other / Touch-Ups</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message" class="form-label">Project Details</label>
+                        <textarea id="message" name="message" rows="4" class="form-input" placeholder="Describe the scope of work (e.g., 3 bedrooms, ceiling height, exterior trim)..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-teal w-full text-center text-base py-3">Submit Estimate Request</button>
+                </form>
+
+                <!-- Success Confirmation State (Hidden by Default) -->
+                <div id="formSuccessMessage" class="hidden text-center py-10 space-y-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-teal-500/20 text-teal-400 rounded-full text-3xl mb-2">
+                        ✓
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">Estimate Request Received!</h3>
+                    <p class="text-gray-300 max-w-md mx-auto text-sm leading-relaxed">
+                        Thank you for reaching out. One of our painting specialists will review your project details and get back to you within 24 hours.
+                    </p>
+                    <div class="pt-4">
+                        <button type="button" id="resetFormBtn" class="text-teal-400 hover:text-teal-300 text-sm font-semibold underline underline-offset-4">
+                            Send another request
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+
+    <!-- ================= PAGE 2: ABOUT (Dedicated Page View) ================= -->
+    <div id="page-about" class="page-view">
+        <main class="max-w-7xl mx-auto px-6 py-16">
+            <section class="mb-24 bg-gray-800/40 p-8 sm:p-12 rounded-3xl border border-gray-700">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12">
+                        <span class="text-teal-400 font-semibold uppercase tracking-wider text-sm block mb-2">Our Story & Heritage</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-50">About Shade Painting Company</h2>
+                    </div>
+
+                    <!-- Heritage Photo Container -->
+                    <div class="mb-12">
+                        <div class="relative w-full aspect-video bg-gray-900 rounded-2xl border border-gray-700 overflow-hidden shadow-2xl flex items-center justify-center group">
+                            <!-- Replace 'heritage-painting-photo.jpg' with your old heritage painting photo file path -->
+                            <img src="heritage-painting-photo.jpg" alt="Chinook Painting LTD Heritage Photo (1983)" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="absolute inset-0 hidden flex-col items-center justify-center p-6 text-center bg-gray-900/90">
+                                <span class="text-teal-400 text-3xl mb-2">🖼️</span>
+                                <p class="text-gray-300 font-medium text-sm sm:text-base">Upload your old heritage painting photo here</p>
+                                <p class="text-gray-500 text-xs mt-1">Chinook Painting LTD (Est. 1983)</p>
+                            </div>
+                        </div>
+                        <p class="text-center text-xs text-gray-400 mt-3 italic">Chinook Painting LTD archive — established by grandfather in 1983.</p>
+                    </div>
+
+                    <!-- Content Text -->
+                    <div class="space-y-6 text-gray-300 leading-relaxed text-base sm:text-lg mb-16">
+                        <p>
+                            Painting isn't just a trade for us; it’s a family tradition. Back in 1983, my grandfather laid down the roots of quality craftsmanship in our community by founding Chinook Painting LTD. He built his business on a simple, uncompromising promise: treat every property with respect, use the best materials available, and never cut corners.
+                        </p>
+                        <p>
+                            Today, Shade Painting Company is proud to pick up that torch. We combine the time-tested values, work ethic, and attention to detail passed down from my grandfather with modern techniques and top-tier products. We aren't just updating walls—we are honoring a legacy of local reliability, one brushstroke at a time.
+                        </p>
+                    </div>
+
+                    <!-- Core Values Grid -->
+                    <div class="mb-16">
+                        <h3 class="text-2xl font-bold text-white text-center mb-8">Our Core Values</h3>
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div class="card-dark">
+                                <h4 class="text-teal-400 font-semibold text-lg mb-2">Customer-Centric Service</h4>
+                                <p>Your home or business is your sanctuary. We prioritize transparent communication, punctuality, and minimal disruption to your daily routine, ensuring a seamless experience from your initial color consultation to the final walkthrough.</p>
+                            </div>
+                            <div class="card-dark">
+                                <h4 class="text-teal-400 font-semibold text-lg mb-2">Uncompromising Quality</h4>
+                                <p>We prep meticulously, use premium finishes, and execute flawless applications designed to withstand local weather and daily wear for years to come.</p>
+                            </div>
+                            <div class="card-dark">
+                                <h4 class="text-teal-400 font-semibold text-lg mb-2">Local Heritage</h4>
+                                <p>Being locally owned and operated means we understand our community's unique architecture and character. We are invested in making our neighborhoods look their absolute best.</p>
+                            </div>
+                            <div class="card-dark">
+                                <h4 class="text-teal-400 font-semibold text-lg mb-2">Cleanliness and Respect</h4>
+                                <p>We treat your space like our own. Our painters maintain a tidy workspace throughout the project and leave behind nothing except stunning results.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- What to Expect List -->
+                    <div class="mb-16 bg-gray-900/60 p-8 rounded-2xl border border-gray-700">
+                        <h3 class="text-xl font-bold text-white mb-6 text-center">What to Expect When You Work With Us</h3>
+                        <div class="grid sm:grid-cols-3 gap-6 text-center">
+                            <div>
+                                <span class="text-teal-400 text-2xl block mb-2">📋</span>
+                                <h4 class="font-semibold text-white mb-1">Detailed Estimates</h4>
+                                <p class="text-sm text-gray-400">Clear, honest pricing with zero hidden fees or surprises.</p>
+                            </div>
+                            <div>
+                                <span class="text-teal-400 text-2xl block mb-2">🎨</span>
+                                <h4 class="font-semibold text-white mb-1">Expert Color Guidance</h4>
+                                <p class="text-sm text-gray-400">Professional advice to help you find the perfect palette for your aesthetic and lighting.</p>
+                            </div>
+                            <div>
+                                <span class="text-teal-400 text-2xl block mb-2">🛡️</span>
+                                <h4 class="font-semibold text-white mb-1">Lasting Protection</h4>
+                                <p class="text-sm text-gray-400">Durable finishes that protect your investment and elevate your property's curb appeal.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Button Back to Contact / Estimate Form -->
+                    <div class="text-center">
+                        <p class="text-gray-300 mb-4 font-medium">Ready to transform your space? Let’s bring your vision to life.</p>
+                        <button onclick="switchPage('home'); scrollToSection('contact');" class="btn-teal inline-block text-lg px-8 py-4 shadow-lg shadow-teal-950/50">
+                            Book Your Free Estimate
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
 
     <!-- Footer -->
     <footer class="border-t border-gray-700 bg-gray-900 mt-20 py-8 text-center text-gray-400 text-sm">
@@ -566,76 +674,71 @@
 
     <!-- Interactive Scripts -->
     <script>
+        // --- Page View Switcher ---
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
         // --- Detailed Multi-Line Painting Animation with Leading Icons ---
         const canvas = document.getElementById('paintingCanvas');
         const ctx = canvas.getContext('2d');
 
         function resizeCanvas() {
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
+            if (canvas && canvas.parentElement) {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Painting strokes with consistent teal color styling
         const paintingElements = [
-            // Primary paint roller stroke 1 (Horizontal sweep)
             {
                 type: 'roller',
                 points: [
-                    {x: -50, y: canvas.height * 0.35},
-                    {x: canvas.width * 0.3, y: canvas.height * 0.28},
-                    {x: canvas.width * 0.7, y: canvas.height * 0.45},
-                    {x: canvas.width + 50, y: canvas.height * 0.38}
+                    {x: -50, y: 140},
+                    {x: 300, y: 110},
+                    {x: 700, y: 180},
+                    {x: 1200, y: 150}
                 ],
                 color: 'rgba(20, 184, 166, 0.28)',
                 width: 110,
                 progress: 0,
                 speed: 0.003
             },
-            // Secondary overlapping paint roller stroke 2
             {
                 type: 'roller',
                 points: [
-                    {x: canvas.width + 50, y: canvas.height * 0.68},
-                    {x: canvas.width * 0.6, y: canvas.height * 0.78},
-                    {x: canvas.width * 0.3, y: canvas.height * 0.58},
-                    {x: -50, y: canvas.height * 0.62}
+                    {x: 1200, y: 280},
+                    {x: 800, y: 320},
+                    {x: 400, y: 240},
+                    {x: -50, y: 260}
                 ],
                 color: 'rgba(45, 212, 191, 0.2)',
                 width: 130,
                 progress: 0,
                 speed: 0.0025
-            },
-            // Vertical line 1 (Cut-in paintbrush accent)
-            {
-                type: 'roller',
-                points: [
-                    {x: canvas.width * 0.25, y: -20},
-                    {x: canvas.width * 0.35, y: canvas.height * 0.5},
-                    {x: canvas.width * 0.3, y: canvas.height + 20}
-                ],
-                color: 'rgba(13, 148, 136, 0.22)',
-                width: 60,
-                progress: 0,
-                speed: 0.0035
-            },
-            // Vertical line 2 (Updated to match the cohesive teal theme)
-            {
-                type: 'roller',
-                points: [
-                    {x: canvas.width * 0.75, y: canvas.height + 20},
-                    {x: canvas.width * 0.7, y: canvas.height * 0.5},
-                    {x: canvas.width * 0.8, y: -20}
-                ],
-                color: 'rgba(20, 184, 166, 0.22)',
-                width: 70,
-                progress: 0,
-                speed: 0.003
             }
         ];
 
         function animatePainting() {
+            if (!canvas) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             let allDone = true;
@@ -680,7 +783,6 @@
                     ctx.stroke();
                 }
 
-                // Collect the tip position for every active stroke that is currently painting
                 if (currentProgress > 0 && currentProgress < 1) {
                     const pt = getPoint(currentProgress);
                     const prevPt = getPoint(Math.max(0, currentProgress - 0.02));
@@ -691,13 +793,11 @@
                 ctx.restore();
             });
 
-            // Draw a paint roller icon at the leading edge of every active paint line
             activeTips.forEach(tip => {
                 ctx.save();
                 ctx.translate(tip.x, tip.y);
                 ctx.rotate(tip.angle + Math.PI / 4);
                 
-                // Roller handle & cage
                 ctx.fillStyle = '#9CA3AF';
                 ctx.fillRect(2, -3, 14, 6);
                 ctx.strokeStyle = '#6B7280';
@@ -708,7 +808,6 @@
                 ctx.lineTo(-8, 10);
                 ctx.stroke();
 
-                // Roller cylinder cover
                 ctx.fillStyle = '#14B8A6';
                 ctx.fillRect(-14, -14, 10, 28);
                 ctx.restore();
@@ -719,7 +818,6 @@
             }
         }
 
-        // Trigger animation on page load/refresh
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(animatePainting, 200);
         });
